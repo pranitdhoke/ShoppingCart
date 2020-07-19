@@ -4,6 +4,13 @@ import com.store.error.NegativeAmountException;
 
 import java.math.BigDecimal;
 
+/**
+ * This is Regular Customer class.
+ *
+ * @author Pranit
+ * @since 19th July 2020
+ * @see DiscountManager
+ */
 public class RegularCustomer implements DiscountManager {
     @Override
     public BigDecimal generateDiscountValue(BigDecimal amount) {

@@ -4,6 +4,11 @@ import com.store.error.NegativeAmountException;
 
 import java.math.BigDecimal;
 
+/**
+ * Cart model class
+ * @author Pranit
+ * @since 18th July 2020
+ */
 public class Cart {
 
     private BigDecimal amount;
