@@ -1,5 +1,6 @@
 package com.store;
 
+import com.store.error.NegativeAmountException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ public class CartTest {
         systemUnderTest = Cart.getCart(BigDecimal.valueOf(-1000));
 
         //When
-        assertThrows(IllegalArgumentException.class,()->systemUnderTest.generateInvoice(new RegularCustomer()));
+        assertThrows(NegativeAmountException.class,()->systemUnderTest.generateInvoice(new RegularCustomer()));
     }
 
     @Test
@@ -81,6 +82,76 @@ public class CartTest {
         assertThat(totalAmount).isNotNull();
         assertThat(totalAmount).isNotNegative();
         assertThat(totalAmount.doubleValue()).isEqualTo(Double.valueOf(13500));
+    }
+
+    @Test
+    @DisplayName("Get an exception if the amount is negative for premium customer.")
+    public void generateBill_negativeAmountExpectExceptionForPremiumCustomer(){
+        // Given
+        systemUnderTest = Cart.getCart(BigDecimal.valueOf(-5));
+
+        //When
+        assertThrows(NegativeAmountException.class,()->systemUnderTest.generateInvoice(new PremiumCustomer()));
+    }
+
+    @Test
+    @DisplayName("Get a valid discount if amount is below 4k for Premium customer.")
+    public void generateBill_PremiumCustomerForBelow4K(){
+        // Given
+        systemUnderTest = Cart.getCart(BigDecimal.valueOf(4000));
+
+        //When
+        BigDecimal totalAmount = systemUnderTest.generateInvoice(new PremiumCustomer());
+
+        //Then
+        assertThat(totalAmount).isNotNull();
+        assertThat(totalAmount).isNotNegative();
+        assertThat(totalAmount.doubleValue()).isEqualTo(Double.valueOf(3600));
+    }
+
+    @Test
+    @DisplayName("Get a valid discount if amount is between 4k to 8k for Premium customer.")
+    public void generateBill_PremiumCustomerForBetween4kTo8k(){
+        // Given
+        systemUnderTest = Cart.getCart(BigDecimal.valueOf(8000));
+
+        //When
+        BigDecimal totalAmount = systemUnderTest.generateInvoice(new PremiumCustomer());
+
+        //Then
+        assertThat(totalAmount).isNotNull();
+        assertThat(totalAmount).isNotNegative();
+        assertThat(totalAmount.doubleValue()).isEqualTo(Double.valueOf(7000));
+    }
+
+    @Test
+    @DisplayName("Get a valid discount if amount is between 8k to 12k for Premium customer.")
+    public void generateBill_PremiumCustomerForBetween8kTo12k(){
+        // Given
+        systemUnderTest = Cart.getCart(BigDecimal.valueOf(12000));
+
+        //When
+        BigDecimal totalAmount = systemUnderTest.generateInvoice(new PremiumCustomer());
+
+        //Then
+        assertThat(totalAmount).isNotNull();
+        assertThat(totalAmount).isNotNegative();
+        assertThat(totalAmount.doubleValue()).isEqualTo(Double.valueOf(10200));
+    }
+
+    @Test
+    @DisplayName("Get a valid discount if amount is above 12k for Premium customer.")
+    public void generateBill_PremiumCustomerForAbove12k(){
+        // Given
+        systemUnderTest = Cart.getCart(BigDecimal.valueOf(20000));
+
+        //When
+        BigDecimal totalAmount = systemUnderTest.generateInvoice(new PremiumCustomer());
+
+        //Then
+        assertThat(totalAmount).isNotNull();
+        assertThat(totalAmount).isNotNegative();
+        assertThat(totalAmount.doubleValue()).isEqualTo(Double.valueOf(15800));
     }
 
 }
