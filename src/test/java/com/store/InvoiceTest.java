@@ -55,7 +55,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount for a non negative amount below 5000.")
-    public void generateBill_regularCustomerBelow5000(){
+    public void calculateTotal_regularCustomerBelow5000(){
         // Given
         BigDecimal amount = BigDecimal.valueOf(2500);
         Cart cart = Cart.getInstance(amount);
@@ -72,7 +72,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is between 5000 - 10000.")
-    public void generateBill_regularCustomerFrom5000To10000(){
+    public void calculateTotal_regularCustomerFrom5000To10000(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(8000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.REGULAR);
@@ -90,7 +90,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is above 10k.")
-    public void generateBill_regularCustomerForAbove10K(){
+    public void calculateTotal_regularCustomerForAbove10K(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(15000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.REGULAR);
@@ -121,7 +121,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is below 4k for Premium customer.")
-    public void generateBill_PremiumCustomerForBelow4K(){
+    public void calculateTotal_PremiumCustomerForBelow4K(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(4000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.PREMIUM);
@@ -137,7 +137,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is between 4k to 8k for Premium customer.")
-    public void generateBill_PremiumCustomerForBetween4kTo8k(){
+    public void calculateTotal_PremiumCustomerForBetween4kTo8k(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(8000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.PREMIUM);
@@ -152,7 +152,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is between 8k to 12k for Premium customer.")
-    public void generateBill_PremiumCustomerForBetween8kTo12k(){
+    public void calculateTotal_PremiumCustomerForBetween8kTo12k(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(12000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.PREMIUM);
@@ -167,7 +167,7 @@ public class InvoiceTest {
 
     @Test
     @DisplayName("Calculate total amount with discount if amount is above 12k for Premium customer.")
-    public void generateBill_PremiumCustomerForAbove12k(){
+    public void calculateTotal_PremiumCustomerForAbove12k(){
         // Given
         Cart cart = Cart.getInstance(BigDecimal.valueOf(20000));
         systemUnderTest = Invoice.getInstance(cart, CustomerType.PREMIUM);
