@@ -1,15 +1,22 @@
-package com.store;
+package com.store.service;
 
 import com.store.error.NegativeAmountException;
 
 import java.math.BigDecimal;
 
+/**
+ * This is PremiumCustomer class.
+ *
+ * @author Pranit
+ * @since 19th July 2020
+ * @see DiscountManager
+ */
 public class PremiumCustomer implements DiscountManager {
 
     @Override
     public BigDecimal generateDiscountValue(BigDecimal amount) {
-        if(amount.signum() == -1){
-            throw new NegativeAmountException();
+        if(amount.compareTo(BigDecimal.ZERO) == 0){
+            return BigDecimal.ZERO;
         }
         BigDecimal discount = BigDecimal.ZERO;
         BigDecimal calculatedDiscount = getDiscountFor0To4K(amount);
@@ -26,7 +33,7 @@ public class PremiumCustomer implements DiscountManager {
             calculatedDiscount = getDiscountForAbove12k(amount);
             discount = discount.add(calculatedDiscount);
         }
-        
+
         return discount;
 
     }

@@ -1,4 +1,4 @@
-package com.store;
+package com.store.service;
 
 import com.store.error.NegativeAmountException;
 
@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 public class RegularCustomer implements DiscountManager {
     @Override
     public BigDecimal generateDiscountValue(BigDecimal amount) {
-        if (amount.signum() == -1) {
-            throw new NegativeAmountException();
+        if(amount.compareTo(BigDecimal.ZERO) == 0){
+            return BigDecimal.ZERO;
         }
         if (amount.compareTo(BigDecimal.valueOf(5000)) <= 0) {
             return BigDecimal.ZERO;
